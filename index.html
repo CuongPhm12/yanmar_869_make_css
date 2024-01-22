@@ -1,0 +1,766 @@
+<style>
+  body {
+    font-weight: bold;
+  }
+
+  .right-content2 {
+    background-color: #ffffff;
+  }
+
+  .tv_header {
+    display: flex;
+    justify-content: space-between; /* 요소 사이에 공간을 분배하여 정렬 */
+  }
+
+  .tv_header_text {
+    font-size: 15px;
+  }
+
+  .tv_header_refresh {
+    font-size: 20px;
+    color: red;
+  }
+  table {
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  tr {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .div_todo,
+  .div_doc {
+    display: inline-block;
+
+    margin-right: 1%;
+    vertical-align: top;
+  }
+  .div_todo {
+    max-width: 35%;
+  }
+
+  .div_doc {
+    margin-top: 55px;
+  }
+  .div_plan {
+    margin-top: 20px;
+  }
+  .orange_header {
+    background-color: #fcf4cc;
+    text-align: center;
+  }
+  .green_header {
+    background-color: #e2efda;
+    text-align: center;
+  }
+  .div_todo_css {
+    display: flex;
+    justify-content: space-between;
+  }
+  .al {
+    text-align: center;
+  }
+  .ac,
+  .al,
+  .ar {
+    white-space: nowrap;
+    min-width: 50px;
+  }
+  .al_css {
+    display: block;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cell_yellow {
+    background-color: yellow;
+    color: red;
+  }
+</style>
+
+<div class="tv_header">
+  <div id="remain_date" class="tv_header_text">
+    새로고침 잔여시간
+    <span id="refresh_time" class="tv_header_refresh"></span>
+  </div>
+</div>
+<div class="tv_content">
+  <div class="div_todo">
+    <div class="div_todo_css">
+      <div>
+        <div>[ Base Date : <span id="cur_ym"></span> ]</div>
+
+        <div class="right-tap-btn ajaxsetx" id="search">
+          <span class="right-btn-text"
+            ><i class="fa fa-search" aria-hidden="true"></i> Search</span
+          >
+        </div>
+      </div>
+      <label for="view_yn_ser">
+        <input type="checkbox" id="view_yn_ser" />
+        Hide Reading
+      </label>
+    </div>
+    <table id="todo">
+      <tr class="orange_header">
+        <td colspan="4">To-Do</td>
+      </tr>
+      <tr class="orange_header">
+        <td>Category</td>
+        <td style="min-width: 100%">Date & Time</td>
+        <td>Title</td>
+        <td>Read</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="div_doc">
+    <table id="doc">
+      <tr class="orange_header">
+        <td rowspan="2">L/I</td>
+        <td colspan="2">YAG</td>
+        <td>Glotack</td>
+        <td>Customs</td>
+        <td rowspan="2">Last Update</td>
+
+        <td rowspan="2">L/I</td>
+        <td colspan="2">YAG</td>
+        <td>Glotack</td>
+        <td>Customs</td>
+        <td rowspan="2">Last Update</td>
+      </tr>
+      <tr class="orange_header">
+        <td>No</td>
+        <td>Invoice</td>
+        <td>BL</td>
+        <td>License</td>
+
+        <td>No</td>
+        <td>Invoice</td>
+        <td>BL</td>
+        <td>License</td>
+      </tr>
+      <tr>
+        <td class="orange_header">1</td>
+        <td id="invoice_no0"></td>
+        <td id="yag0"></td>
+        <td id="bl0"></td>
+        <td id="customs0"></td>
+        <td id="updatedate0"></td>
+
+        <td class="orange_header">16</td>
+        <td id="invoice_no15"></td>
+        <td id="yag15"></td>
+        <td id="bl15"></td>
+        <td id="customs15"></td>
+        <td id="updatedate15"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">2</td>
+        <td id="invoice_no1"></td>
+        <td id="yag1"></td>
+        <td id="bl1"></td>
+        <td id="customs1"></td>
+        <td id="updatedate1"></td>
+
+        <td class="orange_header">17</td>
+        <td id="invoice_no16"></td>
+        <td id="yag16"></td>
+        <td id="bl16"></td>
+        <td id="customs16"></td>
+        <td id="updatedate16"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">3</td>
+        <td id="invoice_no2"></td>
+        <td id="yag2"></td>
+        <td id="bl2"></td>
+        <td id="customs2"></td>
+        <td id="updatedate2"></td>
+
+        <td class="orange_header">18</td>
+        <td id="invoice_no17"></td>
+        <td id="yag17"></td>
+        <td id="bl17"></td>
+        <td id="customs17"></td>
+        <td id="updatedate17"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">4</td>
+        <td id="invoice_no3"></td>
+        <td id="yag3"></td>
+        <td id="bl3"></td>
+        <td id="customs3"></td>
+        <td id="updatedate3"></td>
+
+        <td class="orange_header">19</td>
+        <td id="invoice_no18"></td>
+        <td id="yag18"></td>
+        <td id="bl18"></td>
+        <td id="customs18"></td>
+        <td id="updatedate18"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">5</td>
+        <td id="invoice_no4"></td>
+        <td id="yag4"></td>
+        <td id="bl4"></td>
+        <td id="customs4"></td>
+        <td id="updatedate4"></td>
+
+        <td class="orange_header">20</td>
+        <td id="invoice_no19"></td>
+        <td id="yag19"></td>
+        <td id="bl19"></td>
+        <td id="customs19"></td>
+        <td id="updatedate19"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">6</td>
+        <td id="invoice_no5"></td>
+        <td id="yag5"></td>
+        <td id="bl5"></td>
+        <td id="customs5"></td>
+        <td id="updatedate5"></td>
+
+        <td class="orange_header">21</td>
+        <td id="invoice_no20"></td>
+        <td id="yag20"></td>
+        <td id="bl20"></td>
+        <td id="customs20"></td>
+        <td id="updatedate20"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">7</td>
+        <td id="invoice_no6"></td>
+        <td id="yag6"></td>
+        <td id="bl6"></td>
+        <td id="customs6"></td>
+        <td id="updatedate6"></td>
+
+        <td class="orange_header">22</td>
+        <td id="invoice_no21"></td>
+        <td id="yag21"></td>
+        <td id="bl21"></td>
+        <td id="customs21"></td>
+        <td id="updatedate21"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">8</td>
+        <td id="invoice_no7"></td>
+        <td id="yag7"></td>
+        <td id="bl7"></td>
+        <td id="customs7"></td>
+        <td id="updatedate7"></td>
+
+        <td class="orange_header">23</td>
+        <td id="invoice_no22"></td>
+        <td id="yag22"></td>
+        <td id="bl22"></td>
+        <td id="customs22"></td>
+        <td id="updatedate22"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">9</td>
+        <td id="invoice_no8"></td>
+        <td id="yag8"></td>
+        <td id="bl8"></td>
+        <td id="customs8"></td>
+        <td id="updatedate8"></td>
+
+        <td class="orange_header">24</td>
+        <td id="invoice_no23"></td>
+        <td id="yag23"></td>
+        <td id="bl23"></td>
+        <td id="customs23"></td>
+        <td id="updatedate23"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">10</td>
+        <td id="invoice_no9"></td>
+        <td id="yag9"></td>
+        <td id="bl9"></td>
+        <td id="customs9"></td>
+        <td id="updatedate9"></td>
+
+        <td class="orange_header">25</td>
+        <td id="invoice_no24"></td>
+        <td id="yag24"></td>
+        <td id="bl24"></td>
+        <td id="customs24"></td>
+        <td id="updatedate24"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">11</td>
+        <td id="invoice_no10"></td>
+        <td id="yag10"></td>
+        <td id="bl10"></td>
+        <td id="customs10"></td>
+        <td id="updatedate10"></td>
+
+        <td class="orange_header">26</td>
+        <td id="invoice_no25"></td>
+        <td id="yag25"></td>
+        <td id="bl25"></td>
+        <td id="customs25"></td>
+        <td id="updatedate25"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">12</td>
+        <td id="invoice_no11"></td>
+        <td id="yag11"></td>
+        <td id="bl11"></td>
+        <td id="customs11"></td>
+        <td id="updatedate11"></td>
+
+        <td class="orange_header">27</td>
+        <td id="invoice_no26"></td>
+        <td id="yag26"></td>
+        <td id="bl26"></td>
+        <td id="customs26"></td>
+        <td id="updatedate26"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">13</td>
+        <td id="invoice_no12"></td>
+        <td id="yag12"></td>
+        <td id="bl12"></td>
+        <td id="customs12"></td>
+        <td id="updatedate12"></td>
+
+        <td class="orange_header">28</td>
+        <td id="invoice_no27"></td>
+        <td id="yag27"></td>
+        <td id="bl27"></td>
+        <td id="customs27"></td>
+        <td id="updatedate27"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">14</td>
+        <td id="invoice_no13"></td>
+        <td id="yag13"></td>
+        <td id="bl13"></td>
+        <td id="customs13"></td>
+        <td id="updatedate13"></td>
+
+        <td class="orange_header">29</td>
+        <td id="invoice_no28"></td>
+        <td id="yag28"></td>
+        <td id="bl28"></td>
+        <td id="customs28"></td>
+        <td id="updatedate28"></td>
+      </tr>
+      <tr>
+        <td class="orange_header">15</td>
+        <td id="invoice_no14"></td>
+        <td id="yag14"></td>
+        <td id="bl14"></td>
+        <td id="customs14"></td>
+        <td id="updatedate14"></td>
+
+        <td class="orange_header">30</td>
+        <td id="invoice_no29"></td>
+        <td id="yag29"></td>
+        <td id="bl29"></td>
+        <td id="customs29"></td>
+        <td id="updatedate29"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="div_plan">
+    <table id="plan">
+      <tr class="green_header">
+        <td rowspan="3">L/I</td>
+        <td rowspan="3">
+          Port Of
+          <br />
+          Departure
+        </td>
+        <td colspan="2" rowspan="2">Final</td>
+        <td colspan="3" rowspan="2">Booking</td>
+        <td colspan="10">Container</td>
+        <td rowspan="3">remark</td>
+        <td colspan="2" rowspan="2">Last Update</td>
+      </tr>
+      <tr class="green_header">
+        <td colspan="2">20DR</td>
+        <td colspan="2">40HC</td>
+        <td colspan="2">20FR</td>
+        <td colspan="2">40FR</td>
+        <td colspan="2">Total</td>
+      </tr>
+      <tr class="green_header">
+        <td>ETD</td>
+        <td>ETA</td>
+        <td>NO.</td>
+        <td>VESSEL</td>
+        <td>VOYAGE</td>
+        <td>ORIGIN</td>
+        <td>FINAL</td>
+        <td>ORIGIN</td>
+        <td>FINAL</td>
+        <td>ORIGIN</td>
+        <td>FINAL</td>
+        <td>ORIGIN</td>
+        <td>FINAL</td>
+        <td>ORIGIN</td>
+        <td>FINAL</td>
+        <td>User</td>
+        <td>Date</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td id="port0"></td>
+        <td id="etd0"></td>
+        <td id="eta0"></td>
+        <td id="book_no0"></td>
+        <td id="vessel0"></td>
+        <td id="voyage0"></td>
+        <td id="origin_20dr0"></td>
+        <td id="final_20dr0"></td>
+        <td id="origin_40hc0"></td>
+        <td id="final_40hc0"></td>
+        <td id="origin_20fr0"></td>
+        <td id="final_20fr0"></td>
+        <td id="origin_40fr0"></td>
+        <td id="final_40fr0"></td>
+        <td id="origin_total0"></td>
+        <td id="final_total0"></td>
+        <td class="cell_yellow" id="emergency0"></td>
+        <td id="user0"></td>
+        <td id="date0"></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td id="port1"></td>
+        <td id="etd1"></td>
+        <td id="eta1"></td>
+        <td id="book_no1"></td>
+        <td id="vessel1"></td>
+        <td id="voyage1"></td>
+        <td id="origin_20dr1"></td>
+        <td id="final_20dr1"></td>
+        <td id="origin_40hc1"></td>
+        <td id="final_40hc1"></td>
+        <td id="origin_20fr1"></td>
+        <td id="final_20fr1"></td>
+        <td id="origin_40fr1"></td>
+        <td id="final_40fr1"></td>
+        <td id="origin_total1"></td>
+        <td id="final_total1"></td>
+        <td class="cell_yellow" id="emergency1"></td>
+        <td id="user1"></td>
+        <td id="date1"></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td id="port2"></td>
+        <td id="etd2"></td>
+        <td id="eta2"></td>
+        <td id="book_no2"></td>
+        <td id="vessel2"></td>
+        <td id="voyage2"></td>
+        <td id="origin_20dr2"></td>
+        <td id="final_20dr2"></td>
+        <td id="origin_40hc2"></td>
+        <td id="final_40hc2"></td>
+        <td id="origin_20fr2"></td>
+        <td id="final_20fr2"></td>
+        <td id="origin_40fr2"></td>
+        <td id="final_40fr2"></td>
+        <td id="origin_total2"></td>
+        <td id="final_total2"></td>
+        <td class="cell_yellow" id="emergency2"></td>
+        <td id="user2"></td>
+        <td id="date2"></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td id="port3"></td>
+        <td id="etd3"></td>
+        <td id="eta3"></td>
+        <td id="book_no3"></td>
+        <td id="vessel3"></td>
+        <td id="voyage3"></td>
+        <td id="origin_20dr3"></td>
+        <td id="final_20dr3"></td>
+        <td id="origin_40hc3"></td>
+        <td id="final_40hc3"></td>
+        <td id="origin_20fr3"></td>
+        <td id="final_20fr3"></td>
+        <td id="origin_40fr3"></td>
+        <td id="final_40fr3"></td>
+        <td id="origin_total3"></td>
+        <td id="final_total3"></td>
+        <td class="cell_yellow" id="emergency3"></td>
+        <td id="user3"></td>
+        <td id="date3"></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td id="port4"></td>
+        <td id="etd4"></td>
+        <td id="eta4"></td>
+        <td id="book_no4"></td>
+        <td id="vessel4"></td>
+        <td id="voyage4"></td>
+        <td id="origin_20dr4"></td>
+        <td id="final_20dr4"></td>
+        <td id="origin_40hc4"></td>
+        <td id="final_40hc4"></td>
+        <td id="origin_20fr4"></td>
+        <td id="final_20fr4"></td>
+        <td id="origin_40fr4"></td>
+        <td id="final_40fr4"></td>
+        <td id="origin_total4"></td>
+        <td id="final_total4"></td>
+        <td class="cell_yellow" id="emergency4"></td>
+        <td id="user4"></td>
+        <td id="date4"></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td id="port5"></td>
+        <td id="etd5"></td>
+        <td id="eta5"></td>
+        <td id="book_no5"></td>
+        <td id="vessel5"></td>
+        <td id="voyage5"></td>
+        <td id="origin_20dr5"></td>
+        <td id="final_20dr5"></td>
+        <td id="origin_40hc5"></td>
+        <td id="final_40hc5"></td>
+        <td id="origin_20fr5"></td>
+        <td id="final_20fr5"></td>
+        <td id="origin_40fr5"></td>
+        <td id="final_40fr5"></td>
+        <td id="origin_total5"></td>
+        <td id="final_total5"></td>
+        <td class="cell_yellow" id="emergency5"></td>
+        <td id="user5"></td>
+        <td id="date5"></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td id="port6"></td>
+        <td id="etd6"></td>
+        <td id="eta6"></td>
+        <td id="book_no6"></td>
+        <td id="vessel6"></td>
+        <td id="voyage6"></td>
+        <td id="origin_20dr6"></td>
+        <td id="final_20dr6"></td>
+        <td id="origin_40hc6"></td>
+        <td id="final_40hc6"></td>
+        <td id="origin_20fr6"></td>
+        <td id="final_20fr6"></td>
+        <td id="origin_40fr6"></td>
+        <td id="final_40fr6"></td>
+        <td id="origin_total6"></td>
+        <td id="final_total6"></td>
+        <td class="cell_yellow" id="emergency6"></td>
+        <td id="user6"></td>
+        <td id="date6"></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td id="port7"></td>
+        <td id="etd7"></td>
+        <td id="eta7"></td>
+        <td id="book_no7"></td>
+        <td id="vessel7"></td>
+        <td id="voyage7"></td>
+        <td id="origin_20dr7"></td>
+        <td id="final_20dr7"></td>
+        <td id="origin_40hc7"></td>
+        <td id="final_40hc7"></td>
+        <td id="origin_20fr7"></td>
+        <td id="final_20fr7"></td>
+        <td id="origin_40fr7"></td>
+        <td id="final_40fr7"></td>
+        <td id="origin_total7"></td>
+        <td id="final_total7"></td>
+        <td class="cell_yellow" id="emergency7"></td>
+        <td id="user7"></td>
+        <td id="date7"></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td id="port8"></td>
+        <td id="etd8"></td>
+        <td id="eta8"></td>
+        <td id="book_no8"></td>
+        <td id="vessel8"></td>
+        <td id="voyage8"></td>
+        <td id="origin_20dr8"></td>
+        <td id="final_20dr8"></td>
+        <td id="origin_40hc8"></td>
+        <td id="final_40hc8"></td>
+        <td id="origin_20fr8"></td>
+        <td id="final_20fr8"></td>
+        <td id="origin_40fr8"></td>
+        <td id="final_40fr8"></td>
+        <td id="origin_total8"></td>
+        <td id="final_total8"></td>
+        <td class="cell_yellow" id="emergency8"></td>
+        <td id="user8"></td>
+        <td id="date8"></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td id="port9"></td>
+        <td id="etd9"></td>
+        <td id="eta9"></td>
+        <td id="book_no9"></td>
+        <td id="vessel9"></td>
+        <td id="voyage9"></td>
+        <td id="origin_20dr9"></td>
+        <td id="final_20dr9"></td>
+        <td id="origin_40hc9"></td>
+        <td id="final_40hc9"></td>
+        <td id="origin_20fr9"></td>
+        <td id="final_20fr9"></td>
+        <td id="origin_40fr9"></td>
+        <td id="final_40fr9"></td>
+        <td id="origin_total9"></td>
+        <td id="final_total9"></td>
+        <td class="cell_yellow" id="emergency9"></td>
+        <td id="user9"></td>
+        <td id="date9"></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td id="port10"></td>
+        <td id="etd10"></td>
+        <td id="eta10"></td>
+        <td id="book_no10"></td>
+        <td id="vessel10"></td>
+        <td id="voyage10"></td>
+        <td id="origin_20dr10"></td>
+        <td id="final_20dr10"></td>
+        <td id="origin_40hc10"></td>
+        <td id="final_40hc10"></td>
+        <td id="origin_20fr10"></td>
+        <td id="final_20fr10"></td>
+        <td id="origin_40fr10"></td>
+        <td id="final_40fr10"></td>
+        <td id="origin_total10"></td>
+        <td id="final_total10"></td>
+        <td class="cell_yellow" id="emergency10"></td>
+        <td id="user10"></td>
+        <td id="date10"></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td id="port11"></td>
+        <td id="etd11"></td>
+        <td id="eta11"></td>
+        <td id="book_no11"></td>
+        <td id="vessel11"></td>
+        <td id="voyage11"></td>
+        <td id="origin_20dr11"></td>
+        <td id="final_20dr11"></td>
+        <td id="origin_40hc11"></td>
+        <td id="final_40hc11"></td>
+        <td id="origin_20fr11"></td>
+        <td id="final_20fr11"></td>
+        <td id="origin_40fr11"></td>
+        <td id="final_40fr11"></td>
+        <td id="origin_total11"></td>
+        <td id="final_total11"></td>
+        <td class="cell_yellow" id="emergency11"></td>
+        <td id="user11"></td>
+        <td id="date11"></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td id="port12"></td>
+        <td id="etd12"></td>
+        <td id="eta12"></td>
+        <td id="book_no12"></td>
+        <td id="vessel12"></td>
+        <td id="voyage12"></td>
+        <td id="origin_20dr12"></td>
+        <td id="final_20dr12"></td>
+        <td id="origin_40hc12"></td>
+        <td id="final_40hc12"></td>
+        <td id="origin_20fr12"></td>
+        <td id="final_20fr12"></td>
+        <td id="origin_40fr12"></td>
+        <td id="final_40fr12"></td>
+        <td id="origin_total12"></td>
+        <td id="final_total12"></td>
+        <td class="cell_yellow" id="emergency12"></td>
+        <td id="user12"></td>
+        <td id="date12"></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td id="port13"></td>
+        <td id="etd13"></td>
+        <td id="eta13"></td>
+        <td id="book_no13"></td>
+        <td id="vessel13"></td>
+        <td id="voyage13"></td>
+        <td id="origin_20dr13"></td>
+        <td id="final_20dr13"></td>
+        <td id="origin_40hc13"></td>
+        <td id="final_40hc13"></td>
+        <td id="origin_20fr13"></td>
+        <td id="final_20fr13"></td>
+        <td id="origin_40fr13"></td>
+        <td id="final_40fr13"></td>
+        <td id="origin_total13"></td>
+        <td id="final_total13"></td>
+        <td class="cell_yellow" id="emergency13"></td>
+        <td id="user13"></td>
+        <td id="date13"></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td id="port14"></td>
+        <td id="etd14"></td>
+        <td id="eta14"></td>
+        <td id="book_no14"></td>
+        <td id="vessel14"></td>
+        <td id="voyage14"></td>
+        <td id="origin_20dr14"></td>
+        <td id="final_20dr14"></td>
+        <td id="origin_40hc14"></td>
+        <td id="final_40hc14"></td>
+        <td id="origin_20fr14"></td>
+        <td id="final_20fr14"></td>
+        <td id="origin_40fr14"></td>
+        <td id="final_40fr14"></td>
+        <td id="origin_total14"></td>
+        <td id="final_total14"></td>
+        <td class="cell_yellow" id="emergency14"></td>
+        <td id="user14"></td>
+        <td id="date14"></td>
+      </tr>
+      <tr>
+        <td colspan="7">계</td>
+        <td id="origin_20dr15"></td>
+        <td id="final_20dr15"></td>
+        <td id="origin_40hc15"></td>
+        <td id="final_40hc15"></td>
+        <td id="origin_20fr15"></td>
+        <td id="final_20fr15"></td>
+        <td id="origin_40fr15"></td>
+        <td id="final_40fr15"></td>
+        <td id="origin_total15"></td>
+        <td id="final_total15"></td>
+        <td colspan="3"></td>
+      </tr>
+    </table>
+  </div>
+</div>
